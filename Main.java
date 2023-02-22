@@ -10,8 +10,7 @@ public class Main {
         //ucc.opretTidbestilling();
         //ucc.sletTidbestilling(1);
         //ucc.blokerTidbestilling(1,dato,1,3);
-        ucc.seLedigeTider(2, 3);
-        System.out.println( ucc.seLedigeTider(2, 3).toString());
+        System.out.println(ucc.hentTidbestillinger("28702142"));
 
     }
 

@@ -1,6 +1,7 @@
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class UseCaseController {
     DBSQL dbsql;
@@ -27,10 +28,11 @@ public class UseCaseController {
     {
         dbsql.aflysTidbestilling(tbID);
     }
-    public ArrayList<Tidbestilling> hentTidbestillinger(int tlfnr)
+    public ArrayList<Tidbestilling> hentTidbestillinger(String tlfnr)
     {
-        //Bruges til at slå en TB op for en kunde. Indtast tlfnr retunere deres ikke aflyste aftaler
-        return new ArrayList<Tidbestilling>();
+        ArrayList<Tidbestilling> t1 = dbsql.hentKundeAftaler(tlfnr);
+        Collections.reverse(t1);
+        return t1;
     }
     public ArrayList<Tidbestilling> seLedigeTider(int medID, int beID)
     {
