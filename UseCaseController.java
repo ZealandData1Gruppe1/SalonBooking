@@ -34,11 +34,23 @@ public class UseCaseController {
     }
     public ArrayList<Tidbestilling> seLedigeTider(int medID, int beID)
     {
-        LocalDate dato = LocalDate.of(2023,01,01) ;
+        LocalDate dato = LocalDate.of(2023,02,22) ;//VI skal finde en måde at definere datoerne på.
         ArrayList<Tidbestilling> ledigeTider = dbsql.hentTidbestillingdagForMed(dato,1);
         //Bruges når der er indtastet behandling og frisør til at finde de ledige tider
         return  ledigeTider;
     }
+
+    public ArrayList<Integer> hentAntalModuler(ArrayList<Tidbestilling> tListe)
+            {
+        ArrayList<Integer> tidsbestilling = new ArrayList<>();
+        for (int i = 0; i < tListe.size(); i++)
+        {
+            tidsbestilling.add(dbsql.hentAntalModul(tListe.get(i).getBehandlingsID()));
+        }
+        return tidsbestilling;
+            }
+
+
     public void blokerTidbestilling(int medID, LocalDate dato, int beID)
     {
 
@@ -60,9 +72,5 @@ public class UseCaseController {
 
 
     }
-    public ArrayList<Tidbestilling> hentTidbestillingerForAktivBruger(int medID)
-    {
-        //bruges når kalender loades til at vise aftaler for den relevante uge for den medarbejder der er logget ind
-        return new ArrayList<Tidbestilling>()  ;
-    }
+
 }

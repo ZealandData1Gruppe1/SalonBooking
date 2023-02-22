@@ -101,6 +101,22 @@ public class DBSQL {
         return bestillingListe;
     }
 
+    public int  hentAntalModul(int behandlingID) {
+        int behandlingTid = 0;
 
+        try {
+            String sql = "select antalModuler from behandling where ID = " + behandlingID;
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
 
+            while (rs.next()) {
+                behandlingTid = rs.getInt("antalModuler");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return behandlingTid;
+    }
 }
