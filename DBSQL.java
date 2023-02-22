@@ -1,5 +1,6 @@
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class DBSQL {
     private Connection connection;
@@ -70,6 +71,34 @@ public class DBSQL {
 
         return resultat;
 
+    }
+
+    public ArrayList<Tidbestilling> hentTidbestillingdagForMed(LocalDate dato, int medID) {
+        ArrayList<Tidbestilling> bestillingListe = new ArrayList<>();
+
+        try {
+            String sql = "select * from tidbestilling where medarbejderID = " + medID + " and aflyst = 0" +
+                    " and dato = '" + dato+"'";
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                Tidbestilling t1 = new Tidbestilling();
+                t1.setBehandlingsID(rs.getInt("behandlingID"));
+                t1.setID(rs.getInt("ordreID"));
+                t1.setMedarbejderID(rs.getInt("medarbejderID"));
+                t1.setKundenavn(rs.getString("kundeNavn"));
+                t1.setKundeTLF(rs.getString("kundeTLF"));
+                t1.setDato(dato);
+                t1.setStartModul(rs.getInt("startModul"));
+                bestillingListe.add(t1);
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return bestillingListe;
     }
 
 

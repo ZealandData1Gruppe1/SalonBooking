@@ -9,7 +9,9 @@ public class Main {
         LocalDate dato = LocalDate.of(2023,02,23) ;
         //ucc.opretTidbestilling();
         //ucc.sletTidbestilling(1);
-        ucc.blokerTidbestilling(1,dato,1,3);
+        //ucc.blokerTidbestilling(1,dato,1,3);
+        ucc.seLedigeTider(2, 3);
+        System.out.println( ucc.seLedigeTider(2, 3).toString());
 
     }
 

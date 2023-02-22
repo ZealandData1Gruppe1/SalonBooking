@@ -78,4 +78,17 @@ public class Tidbestilling {
     public void setStartModul(int startModul) {
         this.startModul = startModul;
     }
+
+    @Override
+    public String toString() {
+        return "Tidbestilling{" +
+                "ID=" + ID +
+                ", behandlingsID=" + behandlingsID +
+                ", medarbejderID=" + medarbejderID +
+                ", kundenavn='" + kundenavn + '\'' +
+                ", kundeTLF='" + kundeTLF + '\'' +
+                ", dato=" + dato +
+                ", startModul=" + startModul +
+                '}';
+    }
 }

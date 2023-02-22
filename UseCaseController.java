@@ -34,8 +34,10 @@ public class UseCaseController {
     }
     public ArrayList<Tidbestilling> seLedigeTider(int medID, int beID)
     {
+        LocalDate dato = LocalDate.of(2023,01,01) ;
+        ArrayList<Tidbestilling> ledigeTider = dbsql.hentTidbestillingdagForMed(dato,1);
         //Bruges når der er indtastet behandling og frisør til at finde de ledige tider
-        return new ArrayList<Tidbestilling>();
+        return  ledigeTider;
     }
     public void blokerTidbestilling(int medID, LocalDate dato, int beID)
     {
