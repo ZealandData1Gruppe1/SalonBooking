@@ -14,14 +14,18 @@ public class UseCaseController {
     }
     public void retTidbestilling (int tbID)
     {
+
+        dbsql.aflysTidbestilling(tbID);
         // Lav en midlertidig TB til at holde den der rettes
         //Sæt TV aflyst
         //Hvis ny TB godkendes opret TB slet midlertidig TB
         // Hvis der trykkes annuller sæt midlertidig TB som ikke aflyst
+
+        // skal laves som en del af GUI / menu
     }
     public void sletTidbestilling(int tbID)
     {
-        //sæt TB som aflyst
+        dbsql.aflysTidbestilling(tbID);
     }
     public ArrayList<Tidbestilling> hentTidbestillinger(int tlfnr)
     {
@@ -33,13 +37,26 @@ public class UseCaseController {
         //Bruges når der er indtastet behandling og frisør til at finde de ledige tider
         return new ArrayList<Tidbestilling>();
     }
-    public void blokerTidbestilling(int medID, LocalDate Dato)
+    public void blokerTidbestilling(int medID, LocalDate dato, int beID)
     {
+
+        String beNavn = dbsql.hentBehandlingNavn(beID);
+
         //indsæt ferie pause og sygdom på kalender
+        for (int i = 1; i <= 8; i++) {
+            dbsql.insertTidBestilling(beID,medID,dato,i,beNavn,beNavn);
+        }
+
     }
-    public void blokerTidbestilling(int medID, LocalDate Dato,int modul)
+    public void blokerTidbestilling(int medID, LocalDate dato,int modul, int beID)
     {
         //indsæt pause på kalenderen
+
+        String beNavn = dbsql.hentBehandlingNavn(beID);
+
+        dbsql.insertTidBestilling(beID,medID,dato,modul,beNavn,beNavn);
+
+
     }
     public ArrayList<Tidbestilling> hentTidbestillingerForAktivBruger(int medID)
     {

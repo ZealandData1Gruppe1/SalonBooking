@@ -26,4 +26,52 @@ public class DBSQL {
         throw new RuntimeException(e);
     }
     }
+
+
+    public void aflysTidbestilling(int ordreID) {
+        try {
+            String sql = "UPDATE tidbestilling SET aflyst = 1 where ordreID = " + ordreID;
+            Statement stmt = connection.createStatement();
+            stmt.execute(sql);
+            stmt.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
+    public void fortrydAflys(int ordreID) {
+        try {
+            String sql = "UPDATE tidbestilling SET aflyst = 0 where ordreID = " + ordreID;
+            Statement stmt = connection.createStatement();
+            stmt.execute(sql);
+            stmt.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
+    public String hentBehandlingNavn(int beID) {
+        String resultat = "";
+        try {
+            String sql = "SELECT navn from behandling where ID =" + beID;
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                resultat = rs.getString("navn");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resultat;
+
+    }
+
+
+
 }
