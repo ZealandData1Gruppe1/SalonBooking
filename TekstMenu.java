@@ -417,6 +417,7 @@ public class TekstMenu {
         System.out.println("4. Se ledige tider");
         System.out.println("5. Bloker en tidbestilling");
         System.out.println("6. Ret en tidbestilling");
+        System.out.println("7. Find kundes tider");
 
 
         System.out.println("indtast dit valg: ");
@@ -431,11 +432,11 @@ public class TekstMenu {
                 LocalDate torsdag = mandag.plusDays(3);
                 LocalDate fredag = mandag.plusDays(4);
 
-                ArrayList<Tidbestilling> mandagListe = ucc.seLedigeTider(1, mandag);
-                ArrayList<Tidbestilling> tirsdagListe = ucc.seLedigeTider(1, tirsdag);
-                ArrayList<Tidbestilling> onsdagListe = ucc.seLedigeTider(1, onsdag);
-                ArrayList<Tidbestilling> torsdagListe = ucc.seLedigeTider(1, torsdag);
-                ArrayList<Tidbestilling> fredagListe = ucc.seLedigeTider(1, fredag);
+                ArrayList<Tidbestilling> mandagListe = ucc.seLedigeTider(2, mandag);
+                ArrayList<Tidbestilling> tirsdagListe = ucc.seLedigeTider(2, tirsdag);
+                ArrayList<Tidbestilling> onsdagListe = ucc.seLedigeTider(2, onsdag);
+                ArrayList<Tidbestilling> torsdagListe = ucc.seLedigeTider(2, torsdag);
+                ArrayList<Tidbestilling> fredagListe = ucc.seLedigeTider(2, fredag);
 
                 printSkema(mandagListe, tirsdagListe, onsdagListe, torsdagListe, fredagListe);
                 break;
@@ -504,7 +505,7 @@ public class TekstMenu {
                 break;
             case 4:
                 System.out.println("Indtast en medarbejder og en dato: ");
-                int inuptMedID = input.nextInt();
+                int inputMedID = input.nextInt();
 
                 LocalDate m = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
                 LocalDate ti = m.plusDays(1);
@@ -512,14 +513,31 @@ public class TekstMenu {
                 LocalDate to = m.plusDays(3);
                 LocalDate f = m.plusDays(4);
 
-                ArrayList<Tidbestilling> tbs = ucc.seLedigeTider(inuptMedID,m);
+                ArrayList<Tidbestilling> tbs = ucc.seLedigeTider(inputMedID,m);
                 System.out.println(tbs);
                 break;
             case 5:
+                System.out.println("Indtast medarbejderID: ");
+                int medID = input.nextInt();
+                System.out.println("Indtast År , Måned, Dag : ");
+                LocalDate feriedato = LocalDate.of(input.nextInt(),input.nextInt(),input.nextInt());
+                System.out.println("Indtast behandlingID: ");
+                int beID = input.nextInt();
 
+                ucc.blokerTidbestilling(medID,feriedato,beID);
+                break;
 
             case 6:
+                break;
 
+            case 7:
+                System.out.println("Indtast kundes telefonnummer: ");
+                String tlfNR = input.next();
+                ArrayList<Tidbestilling> kundetiderListe = ucc.hentTidbestillinger(tlfNR);
+                System.out.println(kundetiderListe);
+
+
+                break;
 
         }
     }
