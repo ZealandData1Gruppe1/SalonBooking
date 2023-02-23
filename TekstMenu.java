@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TekstMenu {
-    public static void printSkema(ArrayList<Tidbestilling> mandagListe, ArrayList<Tidbestilling> tirsdagListe, ArrayList<Tidbestilling> onsdagListe) {
+    public static void printSkema(ArrayList<Tidbestilling> mandagListe, ArrayList<Tidbestilling> tirsdagListe, ArrayList<Tidbestilling> onsdagListe, ArrayList<Tidbestilling> torsdagListe, ArrayList<Tidbestilling>fredagListe){
 
         UseCaseController ucc = new UseCaseController();
         Tidbestilling mandag1 = new Tidbestilling();
@@ -20,6 +20,14 @@ public class TekstMenu {
         Tidbestilling onsdag2 = new Tidbestilling();
         Tidbestilling onsdag3 = new Tidbestilling();
         Tidbestilling onsdag4 = new Tidbestilling();
+        Tidbestilling torsdag1 = new Tidbestilling();
+        Tidbestilling torsdag2 = new Tidbestilling();
+        Tidbestilling torsdag3 = new Tidbestilling();
+        Tidbestilling torsdag4 = new Tidbestilling();
+        Tidbestilling fredag1 = new Tidbestilling();
+        Tidbestilling fredag2 = new Tidbestilling();
+        Tidbestilling fredag3 = new Tidbestilling();
+        Tidbestilling fredag4 = new Tidbestilling();
 
 
         for (int i = 0; i < mandagListe.size(); i++) {
@@ -74,21 +82,70 @@ public class TekstMenu {
             }
         }
 
+        for (int i = 0; i < torsdagListe.size(); i++) {
+            switch (torsdagListe.get(i).getStartModul()) {
+                case 1:
+                    torsdag1 = torsdagListe.get(i);
+                    break;
+                case 2:
+                    torsdag2 = torsdagListe.get(i);
+                    break;
+                case 3:
+                    torsdag3 = torsdagListe.get(i);
+                    break;
+                case 4:
+                    torsdag4 = torsdagListe.get(i);
+                    break;
+            }
+        }
 
-        System.out.printf("%8s%8s%8s%8s%8s","        MANDAG","TIRSDAG","ONSDAG","TORSDAG","FREDAG");
+        for (int i = 0; i < fredagListe.size(); i++) {
+            switch (fredagListe.get(i).getStartModul()) {
+                case 1:
+                    fredag1 = fredagListe.get(i);
+                    break;
+                case 2:
+                    fredag2 = fredagListe.get(i);
+                    break;
+                case 3:
+                    fredag3 = fredagListe.get(i);
+                    break;
+                case 4:
+                    fredag4 = fredagListe.get(i);
+                    break;
+            }
+        }
+
+
+
+        System.out.printf(" %8s %8s %8s %8s %8s","        MANDAG","  TIRSDAG","  ONSDAG ","  TORSDAG","  FREDAG");
         System.out.println();
-        System.out.print("8 - 9");
-        System.out.printf("%8s%8s%8s", mandag1.getKundenavn(), tirsdag1.getKundenavn(),onsdag1.getKundenavn());
+        System.out.printf("%-7s", " 8 - 9");
+        System.out.printf("  %-8.8s  %-8.8s  %-8.8s  %-8.8s  %-8.8s", mandag1.getKundenavn(), tirsdag1.getKundenavn(),onsdag1.getKundenavn(),torsdag1.getKundenavn(),fredag1.getKundenavn());
         System.out.println();
-        System.out.println("9 - 10");
-        System.out.println("10 - 11");
-        System.out.println("11 - 12");
+        System.out.printf("%-7s", " 9 - 10");
+        System.out.printf("  %-8.8s  %-8.8s  %-8.8s  %-8.8s  %-8.8s", mandag2.getKundenavn(), tirsdag2.getKundenavn(),onsdag2.getKundenavn(),torsdag2.getKundenavn(),fredag2.getKundenavn());
+        System.out.println();
+        System.out.printf("%-7s", "10 - 11");
+        System.out.printf("  %-8.8s  %-8.8s  %-8.8s  %-8.8s  %-8.8s", mandag3.getKundenavn(), tirsdag3.getKundenavn(),onsdag3.getKundenavn(),torsdag3.getKundenavn(),fredag3.getKundenavn());
+        System.out.println();
+        System.out.printf("%-7s", "11 - 12");
+        System.out.printf("  %-8.8s  %-8.8s  %-8.8s  %-8.8s  %-8.8s", mandag4.getKundenavn(), tirsdag4.getKundenavn(),onsdag4.getKundenavn(),torsdag4.getKundenavn(),fredag4.getKundenavn());
     }
 
     public static void main(String[] args) {
+        LocalDate mandag = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate tirsdag = mandag.plusDays(1);
+        LocalDate onsdag = mandag.plusDays(2);
+        LocalDate torsdag = mandag.plusDays(3);
+        LocalDate fredag = mandag.plusDays(4);
 
+        UseCaseController ucc = new UseCaseController();
+        ucc.opretTidbestilling(1,1, mandag, 1,"emil", "88888888");
+        ucc.opretTidbestilling(1,1, tirsdag, 4,"sercan", "55888888");
+        ucc.opretTidbestilling(1,1, onsdag, 4,"emil", "88888888");
+        ucc.opretTidbestilling(1,1, torsdag, 4,"peterjensen", "88888888");
         menu();
-
     }
 
 
@@ -119,8 +176,10 @@ public class TekstMenu {
                 ArrayList<Tidbestilling> mandagListe = ucc.seLedigeTider(1, mandag);
                 ArrayList<Tidbestilling> tirsdagListe = ucc.seLedigeTider(1, tirsdag);
                 ArrayList<Tidbestilling> onsdagListe = ucc.seLedigeTider(1, onsdag);
+                ArrayList<Tidbestilling> torsdagListe = ucc.seLedigeTider(1, torsdag);
+                ArrayList<Tidbestilling> fredagListe = ucc.seLedigeTider(1, fredag);
 
-                printSkema(mandagListe, tirsdagListe, onsdagListe);
+                printSkema(mandagListe, tirsdagListe, onsdagListe, torsdagListe, fredagListe);
                 break;
             case 2:
                 System.out.println("Indtast tidbestilling oplysninger: ");
