@@ -9,9 +9,9 @@ public class UseCaseController {
     public UseCaseController() {
         dbsql = new DBSQL();
     }
-    public void opretTidbestilling()
+    public void opretTidbestilling(int beID, int medID, LocalDate date, int startModul, String kundenavn, String kundeTLF)
     {
-    dbsql.insertTidBestilling(1,1, LocalDate.now(), 1, "Kevin test","28702142");
+        dbsql.insertTidBestilling(beID,medID,date,startModul,kundenavn,kundeTLF);
     }
     public void retTidbestilling (int tbID)
     {
@@ -34,10 +34,10 @@ public class UseCaseController {
         Collections.reverse(t1);
         return t1;
     }
-    public ArrayList<Tidbestilling> seLedigeTider(int medID, int beID)
+    public ArrayList<Tidbestilling> seLedigeTider(int medID,LocalDate dato)
     {
-        LocalDate dato = LocalDate.of(2023,02,22) ;//VI skal finde en måde at definere datoerne på.
-        ArrayList<Tidbestilling> ledigeTider = dbsql.hentTidbestillingdagForMed(dato,1);
+
+        ArrayList<Tidbestilling> ledigeTider = dbsql.hentTidbestillingdagForMed(dato,medID);
         //Bruges når der er indtastet behandling og frisør til at finde de ledige tider
         return  ledigeTider;
     }
