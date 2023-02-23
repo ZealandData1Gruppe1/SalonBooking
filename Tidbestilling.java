@@ -11,6 +11,7 @@ public class Tidbestilling {
     int startModul;
 
     public Tidbestilling() {
+        this.kundenavn = "";
     }
 
     public Tidbestilling(int ID, int behandlingsID, int medarbejderID, String kundenavn, String kundeTLF, LocalDate dato, int startModul) {
