@@ -149,4 +149,23 @@ public class DBSQL {
 
         return bestillingListe;
     }
+
+    public String hentMedarbejderNavn(int meID) {
+        String resultat = "";
+        try {
+            String sql = "SELECT navn from medarbejder where ID =" + meID;
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                resultat = rs.getString("navn");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resultat;
+
+    }
+
 }

@@ -407,6 +407,21 @@ public class TekstMenu {
 
     }
 
+
+    public static void printKundeTid(ArrayList<Tidbestilling> kundeTider) {
+        for(int i = 0; i < kundeTider.size(); i++) {
+            Tidbestilling t1 = kundeTider.get(i);
+            int ID = t1.getID();
+            int beID = t1.getBehandlingsID();
+            int meID = t1.getMedarbejderID();
+            String kundeNavn = t1.getKundenavn();
+            String kundeTLF = t1.getKundeTLF();
+            LocalDate dato = t1.getDato();
+            int startmodul = t1.getStartModul();
+            System.out.println("Ordre ID : " + ID + "   Behandling : " + beID + "   Medarbejder : " + meID + "   Kundenavn : " + kundeNavn + "   Kunde tlf nr : " + kundeTLF + "   Dato : " + dato + "   Startmodul : " + startmodul);
+        }
+    }
+
     public static void menu() {
         Scanner input = new Scanner(System.in);
         int valg;
@@ -501,7 +516,7 @@ public class TekstMenu {
                 System.out.println("Indtast nummeret på den bestilling du vil slette");
                 int IDslet = input.nextInt();
                 ucc.sletTidbestilling(IDslet);
-
+                System.out.println("Du har nu slettet tidsbestillingen!");
                 break;
             case 4:
                 System.out.println("Indtast en medarbejder og en dato: ");
@@ -534,9 +549,8 @@ public class TekstMenu {
                 System.out.println("Indtast kundes telefonnummer: ");
                 String tlfNR = input.next();
                 ArrayList<Tidbestilling> kundetiderListe = ucc.hentTidbestillinger(tlfNR);
-                System.out.println(kundetiderListe);
-
-
+                System.out.println("Her er tiderne for kunde med telefon nummer: " + tlfNR);
+                printKundeTid(kundetiderListe);
                 break;
 
         }
