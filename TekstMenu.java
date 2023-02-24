@@ -129,6 +129,7 @@ public class TekstMenu {
         System.out.println();
         System.out.printf("%-7s", "11 - 12");
         System.out.printf("  %-8.8s  %-8.8s  %-8.8s  %-8.8s  %-8.8s", mandag4.getKundenavn(), tirsdag4.getKundenavn(),onsdag4.getKundenavn(),torsdag4.getKundenavn(),fredag4.getKundenavn());
+        System.out.println("");
     }
 
     public static String[] BestilEnTid(ArrayList<Tidbestilling> mandagListe, ArrayList<Tidbestilling> tirsdagListe, ArrayList<Tidbestilling> onsdagListe, ArrayList<Tidbestilling> torsdagListe, ArrayList<Tidbestilling>fredagListe,ArrayList<Integer>mandagModul,ArrayList<Integer>tirsdagModul, ArrayList<Integer>onsdagModul, ArrayList<Integer>torsdagModul,ArrayList<Integer>fredagModul)
@@ -578,22 +579,54 @@ public class TekstMenu {
                 break;
 
             case 6:
+                System.out.println("Indtast kundes telefonnummer: ");
+                String telefonNR = input.next();
+                ArrayList<Tidbestilling> kundetiderListe = ucc.hentTidbestillinger(telefonNR);
+                System.out.println("Her er tiderne for kunde med telefon nummer: " + telefonNR);
+                printKundeTid(kundetiderListe);
+
+                System.out.println("Vælg et NR for at rette en tid");
+                int indexOrdreID = input.nextInt();
+
+                ucc.sletTidbestilling(kundetiderListe.get(indexOrdreID).getID());
+                System.out.println("indtast behandlingsID, medarbejderID, dato, startmodul");
+                int behandID = input.nextInt();
+                int medarbID = input.nextInt();
+                String datoinput = input.next();
+                int inputStartmodul = input.nextInt();
+
+                LocalDate datooutput = LocalDate.parse(datoinput);
+
+                ucc.opretTidbestilling(behandID,medarbID,datooutput,inputStartmodul, kundetiderListe.get(indexOrdreID).getKundenavn(),kundetiderListe.get(indexOrdreID).getKundeTLF());
                 break;
 
             case 7:
                 System.out.println("Indtast kundes telefonnummer: ");
                 String tlfNR = input.next();
-                ArrayList<Tidbestilling> kundetiderListe = ucc.hentTidbestillinger(tlfNR);
-                System.out.println(kundetiderListe);
-
-
+                ArrayList<Tidbestilling> kundetiderLister = ucc.hentTidbestillinger(tlfNR);
+                System.out.println("Her er tiderne for kunde med telefon nummer: " + tlfNR);
+                printKundeTid(kundetiderLister);
                 break;
 
         }
     }
+    public static void printKundeTid(ArrayList<Tidbestilling> kundeTider) {
+        for(int i = 0; i < kundeTider.size(); i++) {
+            Tidbestilling t1 = kundeTider.get(i);
+            int ID = t1.getID();
+            int beID = t1.getBehandlingsID();
+            int meID = t1.getMedarbejderID();
+            String kundeNavn = t1.getKundenavn();
+            String kundeTLF = t1.getKundeTLF();
+            LocalDate dato = t1.getDato();
+            int startmodul = t1.getStartModul();
+            System.out.println("Ordre ID : " + ID + "   Behandling : " + beID + "   Medarbejder : " + meID + "   Kundenavn : " + kundeNavn + "   Kunde tlf nr : " + kundeTLF + "   Dato : " + dato + "   Startmodul : " + startmodul);
+        }
+    }
     public static void main(String[] args) {
-
-        menu();
+        while (true) {
+            menu();
+        }
     }
 
 
