@@ -131,7 +131,7 @@ public class TekstMenu {
         System.out.printf("  %-8.8s  %-8.8s  %-8.8s  %-8.8s  %-8.8s", mandag4.getKundenavn(), tirsdag4.getKundenavn(),onsdag4.getKundenavn(),torsdag4.getKundenavn(),fredag4.getKundenavn());
     }
 
-    public static void BestilEnTid(ArrayList<Tidbestilling> mandagListe, ArrayList<Tidbestilling> tirsdagListe, ArrayList<Tidbestilling> onsdagListe, ArrayList<Tidbestilling> torsdagListe, ArrayList<Tidbestilling>fredagListe,ArrayList<Integer>mandagModul,ArrayList<Integer>tirsdagModul, ArrayList<Integer>onsdagModul, ArrayList<Integer>torsdagModul,ArrayList<Integer>fredagModul)
+    public static String[] BestilEnTid(ArrayList<Tidbestilling> mandagListe, ArrayList<Tidbestilling> tirsdagListe, ArrayList<Tidbestilling> onsdagListe, ArrayList<Tidbestilling> torsdagListe, ArrayList<Tidbestilling>fredagListe,ArrayList<Integer>mandagModul,ArrayList<Integer>tirsdagModul, ArrayList<Integer>onsdagModul, ArrayList<Integer>torsdagModul,ArrayList<Integer>fredagModul)
     {
         UseCaseController ucc = new UseCaseController();
         Tidbestilling mandag1 = new Tidbestilling();
@@ -155,11 +155,11 @@ public class TekstMenu {
         Tidbestilling fredag3 = new Tidbestilling();
         Tidbestilling fredag4 = new Tidbestilling();
 
-        String [] mandagLedig = {"Ledig","Ledig","Ledig","Ledig","Ledig","Ledig","Ledig","Ledig","Ledig"};
-        String [] tirsdagLedig = {"Ledig","Ledig","Ledig","Ledig","Ledig","Ledig","Ledig","Ledig","Ledig"};
-        String [] onsdagLedig = {"Ledig","Ledig","Ledig","Ledig","Ledig","Ledig","Ledig","Ledig","Ledig"};
-        String [] torsdagLedig = {"Ledig","Ledig","Ledig","Ledig","Ledig","Ledig","Ledig","Ledig","Ledig"};
-        String [] fredagLedig = {"Ledig","Ledig","Ledig","Ledig","Ledig","Ledig","Ledig","Ledig","Ledig"};
+        String [] mandagLedig = {"Ledig","Ledig","Ledig","Ledig"};
+        String [] tirsdagLedig = {"Ledig","Ledig","Ledig","Ledig"};
+        String [] onsdagLedig = {"Ledig","Ledig","Ledig","Ledig"};
+        String [] torsdagLedig = {"Ledig","Ledig","Ledig","Ledig"};
+        String [] fredagLedig = {"Ledig","Ledig","Ledig","Ledig"};
 
         for(int i=0; i<mandagListe.size();i++) {
             switch (mandagListe.get(i).getStartModul()) {
@@ -205,6 +205,7 @@ public class TekstMenu {
 
                     }
             }
+
         }
         for(int i=0; i<tirsdagListe.size();i++) {
             switch (tirsdagListe.get(i).getStartModul()) {
@@ -405,6 +406,14 @@ public class TekstMenu {
         System.out.printf("%-7s", "11 - 12");
         System.out.printf("  %-8.8s  %-8.8s  %-8.8s  %-8.8s  %-8.8s", mandagLedig[3], tirsdagLedig[3],onsdagLedig[3],torsdagLedig[3],fredagLedig[3]);
 
+        String [] ledigetider = new String[20];
+        System.arraycopy(mandagLedig,0,ledigetider,0,4);
+        System.arraycopy(tirsdagLedig,0,ledigetider,4,4);
+        System.arraycopy(onsdagLedig,0,ledigetider,8,4);
+        System.arraycopy(torsdagLedig,0,ledigetider,12,4);
+        System.arraycopy(fredagLedig,0,ledigetider,16,4);
+
+        return ledigetider;
     }
 
     public static void menu() {
@@ -414,7 +423,7 @@ public class TekstMenu {
         System.out.println("1. Se denne uge");
         System.out.println("2. Opret tidbestilling");
         System.out.println("3. Slet tidbestilling");
-        System.out.println("4. Se ledige tider");
+        System.out.println("4. Se skema for en medarbejder");
         System.out.println("5. Bloker en tidbestilling");
         System.out.println("6. Ret en tidbestilling");
         System.out.println("7. Find kundes tider");
@@ -463,13 +472,40 @@ public class TekstMenu {
                 ArrayList<Integer> torsdagModul = ucc.hentAntalModuler(torsdagListetid);
                 ArrayList<Integer> fredagModul = ucc.hentAntalModuler(fredagListetid);
 
-                BestilEnTid(mandagListetid,tirsdagListetid,onsdagListetid,torsdagListetid,fredagListetid,mandagModul,tirsdagModul,onsdagModul,torsdagModul,fredagModul);
+                String [] bestilListe = BestilEnTid(mandagListetid,tirsdagListetid,onsdagListetid,torsdagListetid,fredagListetid,mandagModul,tirsdagModul,onsdagModul,torsdagModul,fredagModul);
                 System.out.println("");
-                System.out.println("Vælg en dag: 1-5");
+                System.out.println("Vælg en dag: 1-5. tryk 0 for at afslutte");
                 int dag= input.nextInt();
+                if(dag == 0)
+                {
+                    break;
+                }
                 System.out.println("Vælg et modul: 1-4");
                 int modul= input.nextInt();
                 LocalDate dato = LocalDate.now();
+                int start =0;
+                if(dag ==2)
+                {
+                    start=3;
+                }
+                if(dag ==3)
+                {
+                    start = 7;
+                }
+                if(dag ==4)
+                {
+                    start =11;
+                }
+                if(dag ==5)
+                {
+                    start =15;
+                }
+
+                if (bestilListe[start+modul]=="X")
+                {
+                    System.out.println("Du har valgt et tidspunkt der ikke er ledigt. Prøv igen");
+                  break;
+                }
                 System.out.println("Navn:");
                 String navn = input.next();
                 System.out.println("Telefonnummer:");
@@ -492,7 +528,16 @@ public class TekstMenu {
                         dato =fredagtid;
                         break;
                 }
-                ucc.opretTidbestilling(behandlingID,medarbejderID,dato,modul,navn,tlf);
+                System.out.printf("Du er ved at bestille en tid til: %s telefon: %s dato: %s modul: %d. Tryk 1 for at acceptere, tryk 0 for at annulerere",navn,tlf,dato.toString(),modul);
+                int valgaccept = input.nextInt();
+                if (valgaccept == 0 )
+                {
+                    break;
+                }
+                if (valgaccept == 1) {
+                    ucc.opretTidbestilling(behandlingID,medarbejderID,dato,modul,navn,tlf);
+                }
+
                 break;
 
             case 3:
@@ -504,7 +549,7 @@ public class TekstMenu {
 
                 break;
             case 4:
-                System.out.println("Indtast en medarbejder og en dato: ");
+                System.out.println("Indtast et medarbejderID: ");
                 int inputMedID = input.nextInt();
 
                 LocalDate m = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
@@ -513,8 +558,13 @@ public class TekstMenu {
                 LocalDate to = m.plusDays(3);
                 LocalDate f = m.plusDays(4);
 
-                ArrayList<Tidbestilling> tbs = ucc.seLedigeTider(inputMedID,m);
-                System.out.println(tbs);
+                ArrayList<Tidbestilling> mandagListeMed = ucc.seLedigeTider(inputMedID, m);
+                ArrayList<Tidbestilling> tirsdagListeMed = ucc.seLedigeTider(inputMedID, ti);
+                ArrayList<Tidbestilling> onsdagListeMed = ucc.seLedigeTider(inputMedID, o);
+                ArrayList<Tidbestilling> torsdagListeMed = ucc.seLedigeTider(inputMedID, to);
+                ArrayList<Tidbestilling> fredagListeMed = ucc.seLedigeTider(inputMedID, f);
+
+                printSkema(mandagListeMed, tirsdagListeMed, onsdagListeMed, torsdagListeMed, fredagListeMed);
                 break;
             case 5:
                 System.out.println("Indtast medarbejderID: ");
@@ -542,15 +592,6 @@ public class TekstMenu {
         }
     }
     public static void main(String[] args) {
-        LocalDate mandag = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-        LocalDate tirsdag = mandag.plusDays(1);
-        LocalDate onsdag = mandag.plusDays(2);
-        LocalDate torsdag = mandag.plusDays(3);
-        LocalDate fredag = mandag.plusDays(4);
-
-        //UseCaseController ucc = new UseCaseController();
-       // ucc.opretTidbestilling(2,1, fredag, 2,"emil", "88888888");
-        //ucc.opretTidbestilling(2,1, tirsdag, 1,"sercan", "55888888");
 
         menu();
     }
