@@ -167,12 +167,12 @@ public class DBSQL {
 
     }
 
-    public ArrayList<Medarbejder> hentMedarbejderListe(int meID){
+    public ArrayList<Medarbejder> hentMedarbejderListe(){
 
         ArrayList<Medarbejder> medarbejderListe = new ArrayList<Medarbejder>();
 
         try {
-            String sql = "select * from  medarbejder where ID = " + meID;
+            String sql = "select * from medarbejder";
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
@@ -190,12 +190,12 @@ public class DBSQL {
 
     }
 
-    public ArrayList<Behandling> hentBehandlingListe(int ID){
+    public ArrayList<Behandling> hentBehandlingListe(){
 
         ArrayList<Behandling> behandlingListe = new ArrayList<Behandling>();
 
         try {
-            String sql = "select * from  behandling where ID = " + ID;
+            String sql = "select * from  behandling GROUP by ID HAVING (ID) >= 4";
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
@@ -210,6 +210,30 @@ public class DBSQL {
         }
         catch (SQLException e) {throw new RuntimeException(e);}
         return behandlingListe;
+
+    }
+
+    public ArrayList<Behandling> hentBehandlingAdministration(){
+
+        ArrayList<Behandling> behandlingListeAdministration = new ArrayList<Behandling>();
+
+        try {
+            String sql = "select * from  behandling GROUP by ID HAVING (ID) <= 4";
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Behandling b1 = new Behandling();
+                b1.setID(rs.getInt("ID"));
+                b1.setNavn(rs.getString("navn"));
+                b1.setAntalModuler(rs.getInt("antalModuler"));
+
+
+                behandlingListeAdministration.add(b1);
+            }
+        }
+        catch (SQLException e) {throw new RuntimeException(e);
+        }
+        return behandlingListeAdministration;
 
     }
 
