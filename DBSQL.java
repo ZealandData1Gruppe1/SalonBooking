@@ -166,4 +166,40 @@ public class DBSQL {
         return resultat;
 
     }
+
+
+    public void insertMedarbejder(String navn, String kode) {
+        try {
+            String sql = "INSERT INTO medarbejder(navn,kode,aktiv) VALUES('"+ navn +"','"+ kode +"',1 )";
+            Statement stmt = connection.createStatement();
+            stmt.execute(sql);
+            stmt.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public Medarbejder hentMedarbejder(int meID) {
+        Medarbejder resultat = new Medarbejder();
+        try {
+            String sql = "SELECT * from medarbejder where ID =" + meID;
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                resultat.setID(rs.getInt("ID"));
+                resultat.setNavn(rs.getString("navn"));
+                resultat.setKode(rs.getString("kode"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resultat;
+
+    }
+
+
+
 }

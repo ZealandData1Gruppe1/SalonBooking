@@ -428,6 +428,7 @@ public class TekstMenu {
         System.out.println("5. Bloker en tidbestilling");
         System.out.println("6. Ret en tidbestilling");
         System.out.println("7. Find kundes tider");
+        System.out.println("8. Opret Medarbejder");
 
 
         System.out.println("indtast dit valg: ");
@@ -606,6 +607,15 @@ public class TekstMenu {
                 ArrayList<Tidbestilling> kundetiderLister = ucc.hentTidbestillinger(tlfNR);
                 System.out.println("Her er tiderne for kunde med telefon nummer: " + tlfNR);
                 printKundeTid(kundetiderLister);
+                break;
+
+            case 8:
+                System.out.println("Indtast et navn: ");
+                String medarbejderNavn = input.next();
+                System.out.println("Indtast en kode: ");
+                String kode = input.next();
+                ucc.opretMedarbejder(medarbejderNavn,kode);
+                System.out.println("Bruger oprettet!");
                 break;
 
         }

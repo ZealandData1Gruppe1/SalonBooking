@@ -75,4 +75,22 @@ public class UseCaseController {
 
     }
 
+    public void opretMedarbejder(String navn, String kode)
+    {
+        dbsql.insertMedarbejder(navn,kode);
+    }
+
+
+    public boolean login (int ID, String kode) {
+        Medarbejder m1 = dbsql.hentMedarbejder(ID);
+
+        if(m1.getID() == ID && m1.getKode() == kode)
+            return true;
+
+        return false;
+    }
+
+
+
+
 }
