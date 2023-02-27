@@ -114,4 +114,34 @@ public class UseCaseController {
     public void setDag(LocalDate dag) {
         this.dag = dag;
     }
+    public void sletGamleTidbestilling()
+    {
+        LocalDate five_years_ago= LocalDate.now().minusYears(5);
+        dbsql.sletGamleAftaler(five_years_ago);
+        dbsql.setSidsteSletning(LocalDate.now());
+
+    }
+    public void tjekGamleTidbestilling()
+    {
+        LocalDate idag =  LocalDate.now();
+        LocalDate idagminus30 = idag.minusDays(30);
+        LocalDate sidsteSletning = dbsql.hentSidsteSletning();
+        if(sidsteSletning.isBefore(idagminus30))
+        {
+            sletGamleTidbestilling();
+          }
+    }
+    public void opretMedarbejder(String navn, String kode)
+    {
+        dbsql.insertMedarbejder(navn,kode);
+    }
+
+    public boolean login (int ID, String kode) {
+        Medarbejder m1 = dbsql.hentMedarbejder(ID);
+
+        if(m1.getID() == ID && m1.getKode() == kode)
+            return true;
+
+        return false;
+    }
 }
