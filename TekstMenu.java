@@ -162,7 +162,7 @@ public class TekstMenu {
         String [] torsdagLedig = {"Ledig","Ledig","Ledig","Ledig"};
         String [] fredagLedig = {"Ledig","Ledig","Ledig","Ledig"};
 
-        for(int i=0; i<mandagListe.size();i++) {
+            for(int i=0; i<mandagListe.size();i++) {
             switch (mandagListe.get(i).getStartModul()) {
                 case 1:
                     mandagLedig[0] = "X";
