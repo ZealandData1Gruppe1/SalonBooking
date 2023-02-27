@@ -110,10 +110,10 @@ public class UseCaseController {
     public LocalDate getDag() {
         return dag;
     }
-
     public void setDag(LocalDate dag) {
         this.dag = dag;
     }
+    
     public void sletGamleTidbestilling()
     {
         LocalDate five_years_ago= LocalDate.now().minusYears(5);
@@ -143,5 +143,16 @@ public class UseCaseController {
             return true;
 
         return false;
+
+    public ArrayList<Medarbejder> hentMedarbejderListe(int meID){
+        ArrayList<Medarbejder> medarbejderList = dbsql.hentMedarbejderListe(meID);
+
+        return medarbejderList;
+    }
+
+    public ArrayList<Behandling> hentBehandlingListe(int ID){
+        ArrayList<Behandling> BehandlingList = dbsql.hentBehandlingListe(ID);
+
+        return BehandlingList;
     }
 }
