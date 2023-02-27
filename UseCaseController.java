@@ -110,8 +110,19 @@ public class UseCaseController {
     public LocalDate getDag() {
         return dag;
     }
-
     public void setDag(LocalDate dag) {
         this.dag = dag;
+    }
+
+    public ArrayList<Medarbejder> hentMedarbejderListe(int meID){
+        ArrayList<Medarbejder> medarbejderList = dbsql.hentMedarbejderListe(meID);
+
+        return medarbejderList;
+    }
+
+    public ArrayList<Behandling> hentBehandlingListe(int ID){
+        ArrayList<Behandling> BehandlingList = dbsql.hentBehandlingListe(ID);
+
+        return BehandlingList;
     }
 }
