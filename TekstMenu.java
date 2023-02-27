@@ -162,7 +162,7 @@ public class TekstMenu {
         String [] torsdagLedig = {"Ledig","Ledig","Ledig","Ledig"};
         String [] fredagLedig = {"Ledig","Ledig","Ledig","Ledig"};
 
-        for(int i=0; i<mandagListe.size();i++) {
+            for(int i=0; i<mandagListe.size();i++) {
             switch (mandagListe.get(i).getStartModul()) {
                 case 1:
                     mandagLedig[0] = "X";
@@ -442,11 +442,11 @@ public class TekstMenu {
                 LocalDate torsdag = mandag.plusDays(3);
                 LocalDate fredag = mandag.plusDays(4);
 
-                ArrayList<Tidbestilling> mandagListe = ucc.seLedigeTider(2, mandag);
-                ArrayList<Tidbestilling> tirsdagListe = ucc.seLedigeTider(2, tirsdag);
-                ArrayList<Tidbestilling> onsdagListe = ucc.seLedigeTider(2, onsdag);
-                ArrayList<Tidbestilling> torsdagListe = ucc.seLedigeTider(2, torsdag);
-                ArrayList<Tidbestilling> fredagListe = ucc.seLedigeTider(2, fredag);
+                ArrayList<Tidbestilling> mandagListe = ucc.seLedigeTider(1, mandag);
+                ArrayList<Tidbestilling> tirsdagListe = ucc.seLedigeTider(1, tirsdag);
+                ArrayList<Tidbestilling> onsdagListe = ucc.seLedigeTider(1, onsdag);
+                ArrayList<Tidbestilling> torsdagListe = ucc.seLedigeTider(1, torsdag);
+                ArrayList<Tidbestilling> fredagListe = ucc.seLedigeTider(1, fredag);
 
                 printSkema(mandagListe, tirsdagListe, onsdagListe, torsdagListe, fredagListe);
                 break;
