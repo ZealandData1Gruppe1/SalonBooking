@@ -1,13 +1,26 @@
+import java.sql.Array;
 import java.sql.Date;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class UseCaseController {
     DBSQL dbsql;
+    LocalDate dag;
 
     public UseCaseController() {
         dbsql = new DBSQL();
+        dag = LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+    }
+    public void nextWeek()
+    {
+        dag = dag.plusWeeks(1);
+    }
+    public void lastWeek()
+    {
+        dag = dag.minusWeeks(1);
     }
     public void opretTidbestilling(int beID, int medID, LocalDate date, int startModul, String kundenavn, String kundeTLF)
     {
@@ -74,6 +87,32 @@ public class UseCaseController {
 
 
     }
+    public ArrayList<Tidbestilling> hentTidbestillingerForUgeMedID(int medID)
+    {
+        System.out.println(dag);
+        ArrayList<Tidbestilling> manledigeTider = dbsql.hentTidbestillingdagForMed(dag,medID);
+        ArrayList<Tidbestilling> tirsledigeTider = dbsql.hentTidbestillingdagForMed(dag.plusDays(1),medID);
+        ArrayList<Tidbestilling> onsledigeTider = dbsql.hentTidbestillingdagForMed(dag.plusDays(2),medID);
+        ArrayList<Tidbestilling> torsledigeTider = dbsql.hentTidbestillingdagForMed(dag.plusDays(3),medID);
+        ArrayList<Tidbestilling> freledigeTider = dbsql.hentTidbestillingdagForMed(dag.plusDays(4),medID);
+
+        ArrayList<Tidbestilling> ledigeTider= new ArrayList<Tidbestilling>();
+        ledigeTider.addAll(manledigeTider);
+        ledigeTider.addAll(tirsledigeTider);
+        ledigeTider.addAll(onsledigeTider);
+        ledigeTider.addAll(torsledigeTider);
+        ledigeTider.addAll(freledigeTider);
+
+        return  ledigeTider;
+    }
+
+
+    public LocalDate getDag() {
+        return dag;
+    }
+    public void setDag(LocalDate dag) {
+        this.dag = dag;
+    }
 
     public ArrayList<Medarbejder> hentMedarbejderListe(int meID){
         ArrayList<Medarbejder> medarbejderList = dbsql.hentMedarbejderListe(meID);
@@ -86,5 +125,4 @@ public class UseCaseController {
 
         return BehandlingList;
     }
-
 }
