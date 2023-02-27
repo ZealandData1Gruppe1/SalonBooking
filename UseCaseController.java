@@ -75,4 +75,16 @@ public class UseCaseController {
 
     }
 
+    public ArrayList<Medarbejder> hentMedarbejderListe(int meID){
+        ArrayList<Medarbejder> medarbejderList = dbsql.hentMedarbejderListe(meID);
+
+        return medarbejderList;
+    }
+
+    public ArrayList<Behandling> hentBehandlingListe(int ID){
+        ArrayList<Behandling> BehandlingList = dbsql.hentBehandlingListe(ID);
+
+        return BehandlingList;
+    }
+
 }

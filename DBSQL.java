@@ -166,4 +166,51 @@ public class DBSQL {
         return resultat;
 
     }
+
+    public ArrayList<Medarbejder> hentMedarbejderListe(int meID){
+
+        ArrayList<Medarbejder> medarbejderListe = new ArrayList<Medarbejder>();
+
+        try {
+            String sql = "select * from  medarbejder where ID = " + meID;
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Medarbejder m1 = new Medarbejder();
+                m1.setID(rs.getInt("ID"));
+                m1.setNavn(rs.getString("navn"));
+                m1.setKode(rs.getString("kode"));
+
+                medarbejderListe.add(m1);
+            }
+        }
+        catch (SQLException e) {throw new RuntimeException(e);
+        }
+        return medarbejderListe;
+
+    }
+
+    public ArrayList<Behandling> hentBehandlingListe(int ID){
+
+        ArrayList<Behandling> behandlingListe = new ArrayList<Behandling>();
+
+        try {
+            String sql = "select * from  behandling where ID = " + ID;
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Behandling b1 = new Behandling();
+                b1.setID(rs.getInt("ID"));
+                b1.setNavn(rs.getString("navn"));
+                b1.setAntalModuler(rs.getInt("antalModuler"));
+
+
+                behandlingListe.add(b1);
+            }
+        }
+        catch (SQLException e) {throw new RuntimeException(e);}
+        return behandlingListe;
+
+    }
+
 }
