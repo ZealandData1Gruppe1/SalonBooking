@@ -442,11 +442,11 @@ public class TekstMenu {
                 LocalDate torsdag = mandag.plusDays(3);
                 LocalDate fredag = mandag.plusDays(4);
 
-                ArrayList<Tidbestilling> mandagListe = ucc.seLedigeTider(2, mandag);
-                ArrayList<Tidbestilling> tirsdagListe = ucc.seLedigeTider(2, tirsdag);
-                ArrayList<Tidbestilling> onsdagListe = ucc.seLedigeTider(2, onsdag);
-                ArrayList<Tidbestilling> torsdagListe = ucc.seLedigeTider(2, torsdag);
-                ArrayList<Tidbestilling> fredagListe = ucc.seLedigeTider(2, fredag);
+                ArrayList<Tidbestilling> mandagListe = ucc.seLedigeTider(1, mandag);
+                ArrayList<Tidbestilling> tirsdagListe = ucc.seLedigeTider(1, tirsdag);
+                ArrayList<Tidbestilling> onsdagListe = ucc.seLedigeTider(1, onsdag);
+                ArrayList<Tidbestilling> torsdagListe = ucc.seLedigeTider(1, torsdag);
+                ArrayList<Tidbestilling> fredagListe = ucc.seLedigeTider(1, fredag);
 
                 printSkema(mandagListe, tirsdagListe, onsdagListe, torsdagListe, fredagListe);
                 break;
